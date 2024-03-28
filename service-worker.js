@@ -63,11 +63,13 @@ self.addEventListener('beforeinstallprompt', event => {
   // Stash the event so it can be triggered later.
   deferredPrompt = event;
   // Show the install button
+  console.log('Install prompt event received');
   document.getElementById('installButton').style.display = 'block';
 });
 
 // Event listener for install button click
 window.promptInstall = () => {
+  console.log('Install button clicked');
   // Show the install prompt
   deferredPrompt.prompt();
   // Wait for the user to respond to the prompt
