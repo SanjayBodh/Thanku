@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My PWA</title>
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <h1>Welcome to My PWA!</h1>
+  <p>This is a simple Progressive Web App.</p>
+
+  <!-- Button to install the PWA -->
+  <button id="installButton" style="display: none;">Install PWA</button>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(registration => {
+            console.log('Service Worker registered with scope:', registration.scope);
+          })
+          .catch(error => {
+            console.error('Service Worker registration failed:', error);
+          });
+      });
+
+      // Check if the app is installed as PWA
+      if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+        // If PWA is already installed, hide the install button
+        document.getElementById('installButton').style.display = 'none';
+      } else {
+        // If PWA is not installed, show the install button
+        document.getElementById('installButton').style.display = 'block';
+        // Add event listener to install button
+        document.getElementById('installButton').addEventListener('click', () => {
+          // Prompt user to install the PWA
+          window.promptInstall();
+        });
+      }
+    } else {
+      console.log('Service Worker is not supported.');
+    }
+  </script>
+</body>
+</html>
